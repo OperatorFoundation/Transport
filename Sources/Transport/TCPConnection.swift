@@ -8,7 +8,15 @@
 import Foundation
 import NetworkExtension
 
-extension NWTCPConnection: TCPConnection {}
+extension NWTCPConnection: TCPConnection {
+    public func observeState(_ stateCallback: @escaping (NWTCPConnectionState, Error?) -> Void) {
+        let _ = self.observe(\NWTCPConnection.state) {
+            (conn, change) in
+            
+            stateCallback(change.newValue!, nil)
+        }
+    }
+}
 
 public enum TCPConnectionError: Error
 {
@@ -19,6 +27,8 @@ public enum TCPConnectionError: Error
 
 public protocol TCPConnection
 {
+    func observeState(_ callback: @escaping (NWTCPConnectionState, Error?) -> Void)
+    
     /// init(upgradeFor connection: TCPConnection)
     
     /*!
