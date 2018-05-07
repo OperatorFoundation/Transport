@@ -9,13 +9,22 @@
 import Foundation
 import NetworkExtension
 
-extension NEPacketTunnelProvider: PacketTunnelProvider {
-    public func createTCPConnectionThroughTunnel(to remoteEndpoint: NWEndpoint, enableTLS: Bool, tlsParameters TLSParameters: NWTLSParameters?, delegate: Any?) -> TCPConnection? {
-        return createTCPConnectionThroughTunnel(to: remoteEndpoint, enableTLS: enableTLS, tlsParameters: TLSParameters, delegate: delegate)
+extension NEPacketTunnelProvider: PacketTunnelProvider
+{
+    public func createTCPConnectionThroughTunnel(to remoteEndpoint: NWEndpoint,
+                                                 enableTLS: Bool,
+                                                 tlsParameters TLSParameters: NWTLSParameters?,
+                                                 delegate: Any?) -> TCPConnection?
+    {
+        return createTCPConnection(to: remoteEndpoint,
+                                   enableTLS: enableTLS,
+                                   tlsParameters: TLSParameters,
+                                   delegate: delegate)
     }
 }
 
-public protocol PacketTunnelProvider {
+public protocol PacketTunnelProvider
+{
     func createTCPConnectionThroughTunnel(to remoteEndpoint: NWEndpoint,
                                           enableTLS: Bool,
                                           tlsParameters TLSParameters: NWTLSParameters?,
