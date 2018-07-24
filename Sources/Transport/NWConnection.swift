@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NWConnection
+public class NWConnection: Connection
 {
     public enum State
     {
@@ -29,15 +29,19 @@ public class NWConnection
     {
         
     }
-
+    
     var network: URLSessionStreamTask
     
-    init(host: NWEndpoint.Host, port: NWEndpoint.Port, using: NWParameters)
+    init?(host: NWEndpoint.Host, port: NWEndpoint.Port, using: NWParameters)
     {
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: nil)
-        network = session.streamTask(withHostName: "\(host)", port: Int(port.rawValue))
-        network.resume()
+        guard case let .ipv4(addr) = host else {
+            return nil
+        }
         
+        network = session.streamTask(withHostName: addr.address, port: Int(port.rawValue))
+        network.resume()
+                
         if let viability = viabilityUpdateHandler {
             viability(true)
         }
@@ -47,12 +51,12 @@ public class NWConnection
         }
     }
     
-    func start(queue: DispatchQueue)
+    public func start(queue: DispatchQueue)
     {
         
     }
     
-    func cancel()
+    public func cancel()
     {
         if let state = stateUpdateHandler
         {
@@ -60,11 +64,11 @@ public class NWConnection
         }
     }
     
-    var stateUpdateHandler: ((NWConnection.State) -> Void)?
-    var viabilityUpdateHandler: ((Bool) -> Void)?
+    public var stateUpdateHandler: ((NWConnection.State) -> Void)?
+    public var viabilityUpdateHandler: ((Bool) -> Void)?
 
     
-    func send(content: Data?, contentContext: NWConnection.ContentContext, isComplete: Bool, completion: NWConnection.SendCompletion)
+    public func send(content: Data?, contentContext: NWConnection.ContentContext, isComplete: Bool, completion: NWConnection.SendCompletion)
     {
         if let data = content
         {
@@ -77,6 +81,7 @@ public class NWConnection
                     case .contentProcessed(let callback):
                         if error != nil
                         {
+                            print(error ?? "nil")
                             let nwerr = NWError.posix(POSIXErrorCode.ECONNREFUSED)
                             callback(nwerr);
                         }
@@ -91,7 +96,7 @@ public class NWConnection
         }
     }
     
-    func receive(completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
+    public func receive(completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
         receive(minimumIncompleteLength: 1, maximumLength: 1024)
         {
@@ -111,7 +116,7 @@ public class NWConnection
         }
     }
     
-    func receive(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
+    public func receive(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
         network.readData(ofMinLength: minimumIncompleteLength, maxLength: maximumLength, timeout: 60)
         {
