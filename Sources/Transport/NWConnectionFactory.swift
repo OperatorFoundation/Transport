@@ -7,18 +7,18 @@
 
 import Foundation
 
-class NWConnectionFactory: ConnectionFactory
+public class NWConnectionFactory: ConnectionFactory
 {
-    var host: NWEndpoint.Host
-    var port: NWEndpoint.Port
+    public var host: NWEndpoint.Host
+    public var port: NWEndpoint.Port
     
-    init(host: NWEndpoint.Host, port: NWEndpoint.Port)
+    public init(host: NWEndpoint.Host, port: NWEndpoint.Port)
     {
         self.host=host
         self.port=port
     }
     
-    func connect(_ using: NWParameters) -> Connection?
+    public func connect(_ using: NWParameters) -> Connection?
     {
         let maybeConn = NWConnection(host: host, port: port, using: using)
         guard let conn = maybeConn else {

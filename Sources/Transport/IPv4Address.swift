@@ -9,7 +9,7 @@ import Foundation
 
 public struct IPv4Address
 {
-    var address: String
+    public var address: String
     
     public init?(_ address: String)
     {

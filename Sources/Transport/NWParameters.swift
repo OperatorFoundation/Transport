@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NWParameters
+public class NWParameters
 {
     init()
     {
