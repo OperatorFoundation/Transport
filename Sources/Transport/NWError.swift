@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NWError
+public enum NWError: Error
 {
     case posix(POSIXErrorCode)
     case tls(OSStatus)
