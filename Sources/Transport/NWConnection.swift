@@ -53,7 +53,13 @@ public class NWConnection: Connection
     
     public func start(queue: DispatchQueue)
     {
+        if let viability = viabilityUpdateHandler {
+            viability(true)
+        }
         
+        if let state = stateUpdateHandler {
+            state(.ready)
+        }
     }
     
     public func cancel()
