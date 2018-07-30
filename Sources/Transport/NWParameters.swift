@@ -9,7 +9,7 @@ import Foundation
 
 public class NWParameters
 {
-    init()
+    public init()
     {
     }
 }

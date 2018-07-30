@@ -16,9 +16,9 @@ public enum NWEndpoint
     
     public struct Port
     {
-        var rawValue: UInt16
+        public var rawValue: UInt16
         
-        init?(rawValue: UInt16)
+        public init?(rawValue: UInt16)
         {
             self.rawValue=rawValue
         }

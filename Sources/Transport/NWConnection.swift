@@ -30,9 +30,9 @@ public class NWConnection: Connection
         
     }
     
-    var network: URLSessionStreamTask
+    public var network: URLSessionStreamTask
     
-    init?(host: NWEndpoint.Host, port: NWEndpoint.Port, using: NWParameters)
+    public init?(host: NWEndpoint.Host, port: NWEndpoint.Port, using: NWParameters)
     {
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: nil)
         guard case let .ipv4(addr) = host else {
