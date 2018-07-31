@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NWConnectionFactory: ConnectionFactory
+public class NetworkConnectionFactory: ConnectionFactory
 {
     public var host: NWEndpoint.Host
     public var port: NWEndpoint.Port

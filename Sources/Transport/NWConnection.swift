@@ -1,5 +1,5 @@
 //
-//  NWConnection.swift
+//  NetworkConnection.swift
 //  TransportPackageDescription
 //
 //  Created by Brandon Wiley on 6/12/18.
