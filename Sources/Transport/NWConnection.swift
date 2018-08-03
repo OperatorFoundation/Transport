@@ -27,10 +27,13 @@ public class NWConnection: Connection
     
     public class ContentContext
     {
-        
+        init()
+        {
+            //
+        }
     }
     
-    public var network: URLSessionStreamTask
+    private var network: URLSessionStreamTask
     
     public init?(host: NWEndpoint.Host, port: NWEndpoint.Port, using: NWParameters)
     {
