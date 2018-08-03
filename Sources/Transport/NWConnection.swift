@@ -27,7 +27,7 @@ public class NWConnection: Connection
     
     public class ContentContext
     {
-        init()
+        public init()
         {
             //
         }
