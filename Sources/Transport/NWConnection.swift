@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NWConnection: Connection
+open class NWConnection: Connection
 {
     public enum State
     {
@@ -23,6 +23,12 @@ public class NWConnection: Connection
     {
         case contentProcessed((NWError?) -> Void)
         case idempotent
+        
+        public init(completion: @escaping((NWError?) -> Void))
+        {
+            self = .contentProcessed(completion)
+        }
+        
     }
     
     public class ContentContext
