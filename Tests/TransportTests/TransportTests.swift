@@ -15,7 +15,7 @@ class TransportTests: XCTestCase {
             XCTAssertNotNil(maybePort)
             return
         }
-        let factory: ConnectionFactory = NWConnectionFactory(host: host, port: port)
+        let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
         let params = NWParameters()
         let conn = factory.connect(params)
         XCTAssertNotNil(conn)
@@ -36,7 +36,7 @@ class TransportTests: XCTestCase {
             XCTAssertNotNil(maybePort)
             return
         }
-        let factory: ConnectionFactory = NWConnectionFactory(host: host, port: port)
+        let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
         let params = NWParameters()
         let maybeConn = factory.connect(params)
         guard let conn = maybeConn else {
@@ -71,7 +71,7 @@ class TransportTests: XCTestCase {
             XCTAssertNotNil(maybePort)
             return
         }
-        let factory: ConnectionFactory = NWConnectionFactory(host: host, port: port)
+        let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
         let params = NWParameters()
         let maybeConn = factory.connect(params)
         guard let conn = maybeConn else {

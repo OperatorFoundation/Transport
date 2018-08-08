@@ -23,12 +23,6 @@ open class NWConnection: Connection
     {
         case contentProcessed((NWError?) -> Void)
         case idempotent
-        
-        public init(completion: @escaping((NWError?) -> Void))
-        {
-            self = .contentProcessed(completion)
-        }
-        
     }
     
     public class ContentContext
@@ -118,16 +112,16 @@ open class NWConnection: Connection
             (data, context, isComplete, error) in
             
             guard error == nil else {
-                completion(nil, context, true, error)
+                completion(nil, context, isComplete, error)
                 return
             }
             
             guard data != nil else {
-                completion(nil, context, false, nil)
+                completion(nil, context, isComplete, nil)
                 return
             }
             
-            completion(data, context, false, nil)
+            completion(data, context, isComplete, nil)
         }
     }
     
@@ -139,16 +133,16 @@ open class NWConnection: Connection
             
             guard error == nil else {
                 let nwerr = NWError.posix(POSIXErrorCode.ECONNREFUSED)
-                completion(nil, nil, true, nwerr)
+                completion(nil, nil, bool, nwerr)
                 return
             }
             
             guard data != nil else {
-                completion(nil, nil, false, nil)
+                completion(nil, nil, bool, nil)
                 return
             }
             
-            completion(data, nil, false, nil)
+            completion(data, nil, bool, nil)
         }
     }
 }

@@ -11,7 +11,7 @@ let package = Package(
             targets: ["Transport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "0.0.10"),
+        .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "0.1.2"),
     ],
     targets: [
         .target(
