@@ -15,11 +15,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "0.1.2"),
+        .package(url: "https://github.com/OperatorFoundation/SwiftSocket.git", from: "2.0.3")
     ],
     targets: [
         .target(
             name: "Network",
-            dependencies: []),
+            dependencies: ["SwiftSocket"]),
         .target(
             name: "Transport",
             dependencies: ["Network"]),
