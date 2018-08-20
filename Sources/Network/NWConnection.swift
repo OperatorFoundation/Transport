@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class NWConnection: Connection
+open class NWConnection
 {
     public enum State
     {

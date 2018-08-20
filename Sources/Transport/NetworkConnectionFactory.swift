@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Network
+
 public class NetworkConnectionFactory: ConnectionFactory
 {
     public var host: NWEndpoint.Host
@@ -20,11 +22,8 @@ public class NetworkConnectionFactory: ConnectionFactory
     
     public func connect(_ using: NWParameters) -> Connection?
     {
-        let maybeConn = NWConnection(host: host, port: port, using: using)
-        guard let conn = maybeConn else {
-            return nil
-        }
+        let conn = NWConnection(host: host, port: port, using: using)
         
-        return conn as Connection
+        return conn
     }
 }
