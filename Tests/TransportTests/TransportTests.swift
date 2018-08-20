@@ -1,9 +1,9 @@
 import XCTest
 @testable import Transport
-import Datable
+//import Datable
 
 class TransportTests: XCTestCase {
-    func testConnectionFactory() {
+    func testTCPConnectionFactory() {
         let maybeAddr = IPv4Address("172.217.9.174")
         guard let addr = maybeAddr else {
             XCTAssertNotNil(maybeAddr)
@@ -21,7 +21,7 @@ class TransportTests: XCTestCase {
         XCTAssertNotNil(conn)
     }
     
-    func testSend() {
+    func testTCPSend() {
         var lock: DispatchGroup
         lock = DispatchGroup.init()
         
@@ -44,7 +44,7 @@ class TransportTests: XCTestCase {
             return
         }
 
-        let data: Data = "GET / HTTP/1.0\n\n".data
+        let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
         let context=NWConnection.ContentContext()
         lock.enter()
         conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
@@ -56,7 +56,7 @@ class TransportTests: XCTestCase {
         lock.wait()
     }
 
-    func testReceive() {
+    func testTCPReceive() {
         var lock: DispatchGroup
         lock = DispatchGroup.init()
         
@@ -79,7 +79,7 @@ class TransportTests: XCTestCase {
             return
         }
         
-        let data: Data = "GET / HTTP/1.0\n\n".data
+        let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
         let context=NWConnection.ContentContext()
         lock.enter()
         conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
@@ -111,15 +111,122 @@ class TransportTests: XCTestCase {
                 return
             }
             
-            print("data: ", data.string)
+            print("data: \(data)")
             lock.leave()
         }
         
         lock.wait()
     }
     
-    static var allTests = [
-        ("testConnectionFactory", testConnectionFactory),
-        ("testSend", testSend),
-    ]
+    func testUDPConnectionFactory() {
+        let maybeAddr = IPv4Address("172.217.9.174")
+        guard let addr = maybeAddr else {
+            XCTAssertNotNil(maybeAddr)
+            return
+        }
+        let host = NWEndpoint.Host.ipv4(addr)
+        let maybePort = NWEndpoint.Port(rawValue: 80)
+        guard let port = maybePort else {
+            XCTAssertNotNil(maybePort)
+            return
+        }
+        let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
+        let conn = factory.connect(.udp)
+        XCTAssertNotNil(conn)
+    }
+    
+    func testUDPSend() {
+        var lock: DispatchGroup
+        lock = DispatchGroup.init()
+        
+        let maybeAddr = IPv4Address("172.217.9.174")
+        guard let addr = maybeAddr else {
+            XCTAssertNotNil(maybeAddr)
+            return
+        }
+        let host = NWEndpoint.Host.ipv4(addr)
+        let maybePort = NWEndpoint.Port(rawValue: 80)
+        guard let port = maybePort else {
+            XCTAssertNotNil(maybePort)
+            return
+        }
+        let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
+        let maybeConn = factory.connect(.udp)
+        guard let conn = maybeConn else {
+            XCTAssertNotNil(maybeConn)
+            return
+        }
+        
+        let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
+        let context=NWConnection.ContentContext()
+        lock.enter()
+        conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
+            (maybeError) in
+            
+            lock.leave()
+            XCTAssertNil(maybeError)
+        }))
+        lock.wait()
+    }
+    
+    func testUDPReceive() {
+        var lock: DispatchGroup
+        lock = DispatchGroup.init()
+        
+        let maybeAddr = IPv4Address("172.217.9.174")
+        guard let addr = maybeAddr else {
+            XCTAssertNotNil(maybeAddr)
+            return
+        }
+        let host = NWEndpoint.Host.ipv4(addr)
+        let maybePort = NWEndpoint.Port(rawValue: 80)
+        guard let port = maybePort else {
+            XCTAssertNotNil(maybePort)
+            return
+        }
+        let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
+        let maybeConn = factory.connect(.udp)
+        guard let conn = maybeConn else {
+            XCTAssertNotNil(maybeConn)
+            return
+        }
+        
+        let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
+        let context=NWConnection.ContentContext()
+        lock.enter()
+        conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
+            (maybeError) in
+            
+            guard maybeError==nil else {
+                XCTAssertNil(maybeError)
+                lock.leave()
+                return
+            }
+            
+            lock.leave()
+        }))
+        lock.wait()
+        
+        lock.enter()
+        conn.receive(minimumIncompleteLength: 1, maximumLength: 1024) {
+            (maybeData, maybeContext, isComplet, maybeError) in
+            
+            guard maybeError==nil else {
+                XCTAssertNil(maybeError)
+                lock.leave()
+                return
+            }
+            
+            guard let data = maybeData else {
+                XCTAssertNotNil(maybeData)
+                lock.leave()
+                return
+            }
+            
+            print("data: \(data)")
+            lock.leave()
+        }
+        
+        lock.wait()
+    }
 }
