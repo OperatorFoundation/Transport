@@ -7,6 +7,9 @@ let package = Package(
     name: "Transport",
     products: [
         .library(
+            name: "Network",
+            targets: ["Network"]),
+        .library(
             name: "Transport",
             targets: ["Transport"]),
     ],
@@ -16,10 +19,13 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Transport",
+            name: "Network",
             dependencies: []),
+        .target(
+            name: "Transport",
+            dependencies: ["Network"]),
         .testTarget(
             name: "TransportTests",
-            dependencies: ["Transport", "Datable"]),
+            dependencies: ["Transport", "Network", "Datable"]),
     ]
 )

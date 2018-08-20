@@ -1,5 +1,7 @@
 import Foundation
 
+import Network
+
 public protocol Connection
 {
     func start(queue: DispatchQueue)

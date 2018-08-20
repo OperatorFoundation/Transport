@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Network
+
 public protocol ConnectionFactory {
     func connect(_ using: NWParameters) -> Connection?
 }
