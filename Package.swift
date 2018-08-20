@@ -12,6 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "0.1.2"),
+        .package(url: "https://github.com/swiftsocket/SwiftSocket.git", from: "2.0.2"),
     ],
     targets: [
         .target(
