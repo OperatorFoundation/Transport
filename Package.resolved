@@ -9,6 +9,15 @@
           "revision": "9e2d1854337363fd50ef6401fa5518a508b3964e",
           "version": "0.1.2"
         }
+      },
+      {
+        "package": "SwiftSocket",
+        "repositoryURL": "https://github.com/OperatorFoundation/SwiftSocket.git",
+        "state": {
+          "branch": null,
+          "revision": "24232dcbd0a7bb0db35a7b96d75ceac9a88ce670",
+          "version": "2.0.3"
+        }
       }
     ]
   },
