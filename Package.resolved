@@ -11,6 +11,24 @@
         }
       },
       {
+        "package": "swift-nio",
+        "repositoryURL": "https://github.com/apple/swift-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "f42c836ba58e3e38688acdb75df986dff02717f1",
+          "version": "1.9.4"
+        }
+      },
+      {
+        "package": "swift-nio-zlib-support",
+        "repositoryURL": "https://github.com/apple/swift-nio-zlib-support.git",
+        "state": {
+          "branch": null,
+          "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "SwiftSocket",
         "repositoryURL": "https://github.com/OperatorFoundation/SwiftSocket.git",
         "state": {
