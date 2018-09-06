@@ -251,7 +251,6 @@ class TransportTests: XCTestCase {
         {
             newConnection in
             
-            print("new connection")
             serverConnected.fulfill()
             newConnection.start(queue: queue)
             
@@ -259,7 +258,6 @@ class TransportTests: XCTestCase {
             {
                 (maybeData, maybeContext, isComplete, maybeError) in
                 
-                print("receive")
                 serverReceived.fulfill()
                 let context = NWConnection.ContentContext()
                 newConnection.send(content: "OK".data, contentContext: context, isComplete: true, completion: .idempotent)
@@ -270,7 +268,7 @@ class TransportTests: XCTestCase {
         {
             newState in
             
-            print("new state")
+            print("new state \(newState)")
             switch newState
             {
                 case .ready:
@@ -279,6 +277,10 @@ class TransportTests: XCTestCase {
                     break
             }
         }
+        
+        listener.start(queue: queue)
+        
+        print("server setup")
         
         let addr = IPv4Address("127.0.0.1")!
         let host = NWEndpoint.Host.ipv4(addr)
@@ -290,10 +292,12 @@ class TransportTests: XCTestCase {
             return
         }
         clientConnected.fulfill()
-        
+
+        /*
         let data: Data = "GET / HTTP/1.0\n\n".data
         let context=NWConnection.ContentContext()
-        
+
+        print("sending")
         conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
             (maybeError) in
             
@@ -301,11 +305,13 @@ class TransportTests: XCTestCase {
                 XCTAssertNil(maybeError)
                 return
             }
+            
+            print("sent")
         }))
         
         conn.receive(minimumIncompleteLength: 1, maximumLength: 1024)
         {
-            (maybeData, maybeContext, isComplet, maybeError) in
+            (maybeData, maybeContext, isComplete, maybeError) in
             
             guard maybeError==nil else
             {
@@ -322,6 +328,7 @@ class TransportTests: XCTestCase {
             print("data: \(data)")
             clientReceived.fulfill()
         }
+ */
         
         waitForExpectations(timeout: 5)
         {

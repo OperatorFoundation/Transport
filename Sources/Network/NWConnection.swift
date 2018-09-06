@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Dispatch
 
 import SwiftSocket
 
@@ -38,6 +39,7 @@ open class NWConnection
     private var usingUDP: Bool
     private var network: URLSessionStreamTask?
     private var client: UDPClient?
+    private var queue: DispatchQueue?
     
     public init?(host: NWEndpoint.Host, port: NWEndpoint.Port, using: NWParameters)
     {
@@ -80,6 +82,8 @@ open class NWConnection
     
     public func start(queue: DispatchQueue)
     {
+        self.queue=queue
+        
         if let viability = viabilityUpdateHandler {
             viability(true)
         }
@@ -99,7 +103,6 @@ open class NWConnection
     
     public var stateUpdateHandler: ((NWConnection.State) -> Void)?
     public var viabilityUpdateHandler: ((Bool) -> Void)?
-
     
     public func send(content: Data?, contentContext: NWConnection.ContentContext, isComplete: Bool, completion: NWConnection.SendCompletion)
     {
@@ -221,20 +224,23 @@ open class NWConnection
 
     public func receiveUDP(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
-        let maybeResult = client?.recv(minimumIncompleteLength)
-        guard let (maybeBytes, _, _) = maybeResult else
+        queue?.async
         {
-            completion(nil, nil, false, nil)
-            return
+            let maybeResult = self.client?.recv(minimumIncompleteLength)
+            guard let (maybeBytes, _, _) = maybeResult else
+            {
+                completion(nil, nil, false, nil)
+                return
+            }
+            
+            guard let bytes = maybeBytes else
+            {
+                completion(nil, nil, false, nil)
+                return
+            }
+            
+            completion(Data(bytes), nil, false, nil)
         }
-        
-        guard let bytes = maybeBytes else
-        {
-            completion(nil, nil, false, nil)
-            return
-        }
-        
-        completion(Data(bytes), nil, false, nil)
     }
     
     public func receiveTCP(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)

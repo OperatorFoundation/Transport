@@ -28,11 +28,14 @@ public class NWListener
     public var stateUpdateHandler: ((NWListener.State) -> Void)?
 
     private var usingUDP: Bool
+    private var channel: Channel?
     
     public required init(using: NWParameters, on: NWEndpoint.Port) throws
     {
         self.parameters=using
         self.port=on
+        
+        print("Port: \(self.port)")
         
         usingUDP = false
         
@@ -61,10 +64,8 @@ public class NWListener
                 try! group.syncShutdownGracefully()
             }
             
-            let channel = try! bootstrap.bind(host: "127.0.0.1", port: 2079).wait()
+            channel = try! bootstrap.bind(host: "127.0.0.1", port: 2079).wait()
             /* the Channel is now ready to send/receive datagrams */
-            
-            try channel.closeFuture.wait()  // Wait until the channel un-binds.
         }
         else
         {
@@ -75,6 +76,18 @@ public class NWListener
     {
         if let state = stateUpdateHandler {
             state(.ready)
+        }
+        
+        queue.async
+        {
+            do
+            {
+                try self.channel?.closeFuture.wait()  // Wait until the channel un-binds.
+            }
+            catch
+            {
+                print("Failed to wait for unbind")
+            }
         }
     }
     
