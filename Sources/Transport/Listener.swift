@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-protocol Listener
+public protocol Listener
 {
     init(using: NWParameters, on: NWEndpoint.Port) throws
     

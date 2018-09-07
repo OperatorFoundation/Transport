@@ -35,7 +35,7 @@ public class NWListener
         self.parameters=using
         self.port=on
         
-        print("Port: \(self.port)")
+        print("Port: \(String(describing: self.port))")
         
         usingUDP = false
         
