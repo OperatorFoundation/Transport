@@ -30,10 +30,10 @@ public class NWListener
     private var usingUDP: Bool
     private var channel: Channel?
     
-    public required init(using: NWParameters, on: NWEndpoint.Port) throws
+    public required init(using: NWParameters, on port: NWEndpoint.Port) throws
     {
         self.parameters=using
-        self.port=on
+        self.port=port
         
         print("Port: \(String(describing: self.port))")
         

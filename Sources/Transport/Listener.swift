@@ -10,8 +10,6 @@ import Network
 
 public protocol Listener
 {
-    init(using: NWParameters, on: NWEndpoint.Port) throws
-    
     var debugDescription: String { get }
     var newConnectionHandler: ((NWConnection) -> Void)? { get set }
     var parameters: NWParameters { get }
