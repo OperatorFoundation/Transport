@@ -7,9 +7,6 @@ let package = Package(
     name: "Transport",
     products: [
         .library(
-            name: "Network",
-            targets: ["Network"]),
-        .library(
             name: "Transport",
             targets: ["Transport"]),
     ],
@@ -24,9 +21,9 @@ let package = Package(
             dependencies: ["SwiftSocket", "NIO"]),
         .target(
             name: "Transport",
-            dependencies: ["Network"]),
+            dependencies: [),
         .testTarget(
             name: "TransportTests",
-            dependencies: ["Transport", "Network", "Datable"]),
+            dependencies: ["Transport", "Datable"]),
     ]
 )

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import Network
 
 public class NetworkConnectionFactory: ConnectionFactory

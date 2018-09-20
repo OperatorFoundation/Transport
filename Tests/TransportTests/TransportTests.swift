@@ -46,7 +46,8 @@ class TransportTests: XCTestCase {
         }
 
         let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
-        let context=NWConnection.ContentContext()
+        let context = NWConnection.ContentContext(identifier: "Connection Context")
+        //let context=NWConnection.ContentContext()
         lock.enter()
         conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
             (maybeError) in
@@ -81,7 +82,7 @@ class TransportTests: XCTestCase {
         }
         
         let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
-        let context=NWConnection.ContentContext()
+        let context=NWConnection.ContentContext(identifier: "Send Context")
         lock.enter()
         conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
             (maybeError) in
@@ -159,7 +160,7 @@ class TransportTests: XCTestCase {
         }
         
         let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
-        let context=NWConnection.ContentContext()
+        let context=NWConnection.ContentContext(identifier: "Send Context")
         lock.enter()
         conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
             (maybeError) in
@@ -175,30 +176,42 @@ class TransportTests: XCTestCase {
         lock = DispatchGroup.init()
         
         let maybeAddr = IPv4Address("172.217.9.174")
-        guard let addr = maybeAddr else {
+        guard let addr = maybeAddr
+        else
+        {
             XCTAssertNotNil(maybeAddr)
             return
         }
         let host = NWEndpoint.Host.ipv4(addr)
         let maybePort = NWEndpoint.Port(rawValue: 80)
-        guard let port = maybePort else {
+        guard let port = maybePort
+        else
+        {
             XCTAssertNotNil(maybePort)
             return
         }
         let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
         let maybeConn = factory.connect(.udp)
-        guard let conn = maybeConn else {
+        guard let conn = maybeConn
+        else
+        {
             XCTAssertNotNil(maybeConn)
             return
         }
         
         let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
-        let context=NWConnection.ContentContext()
+        let context=NWConnection.ContentContext(identifier: "Send Context")
         lock.enter()
-        conn.send(content: data, contentContext: context, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
+        conn.send(content: data,
+                  contentContext: context,
+                  isComplete: true,
+                  completion: NWConnection.SendCompletion.contentProcessed(
+        {
             (maybeError) in
             
-            guard maybeError==nil else {
+            guard maybeError==nil
+            else
+            {
                 XCTAssertNil(maybeError)
                 lock.leave()
                 return
@@ -209,16 +222,21 @@ class TransportTests: XCTestCase {
         lock.wait()
         
         lock.enter()
-        conn.receive(minimumIncompleteLength: 1, maximumLength: 1024) {
+        conn.receive(minimumIncompleteLength: 1, maximumLength: 1024)
+        {
             (maybeData, maybeContext, isComplet, maybeError) in
             
-            guard maybeError==nil else {
+            guard maybeError==nil
+            else
+            {
                 XCTAssertNil(maybeError)
                 lock.leave()
                 return
             }
             
-            guard let data = maybeData else {
+            guard let data = maybeData
+            else
+            {
                 XCTAssertNotNil(maybeData)
                 lock.leave()
                 return
@@ -259,7 +277,7 @@ class TransportTests: XCTestCase {
                 (maybeData, maybeContext, isComplete, maybeError) in
                 
                 serverReceived.fulfill()
-                let context = NWConnection.ContentContext()
+                let context = NWConnection.ContentContext(identifier: "Send Context")
                 newConnection.send(content: "OK".data, contentContext: context, isComplete: true, completion: .idempotent)
             })
         }
@@ -274,6 +292,8 @@ class TransportTests: XCTestCase {
                 case .ready:
                     serverReady.fulfill()
                 default:
+                    print("Received unexpected state: \(newState)")
+                    XCTFail()
                     break
             }
         }

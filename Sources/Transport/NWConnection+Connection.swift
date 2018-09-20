@@ -6,10 +6,14 @@
 //
 
 import Foundation
-
 import Network
 
 extension NWConnection: Connection
 {
+    public func receive(completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
+    {
+        //FIXME
+    }
+    
     
 }
