@@ -21,7 +21,7 @@ let package = Package(
             dependencies: ["SwiftSocket", "NIO"]),
         .target(
             name: "Transport",
-            dependencies: [),
+            dependencies: []),
         .testTarget(
             name: "TransportTests",
             dependencies: ["Transport", "Datable"]),
