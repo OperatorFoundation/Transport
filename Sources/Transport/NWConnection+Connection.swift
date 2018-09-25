@@ -15,5 +15,4 @@ extension NWConnection: Connection
         //FIXME
     }
     
-    
 }

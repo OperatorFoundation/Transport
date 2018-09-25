@@ -19,9 +19,9 @@ public class NetworkConnectionFactory: ConnectionFactory
         self.port=port
     }
     
-    public func connect(_ using: NWParameters) -> Connection?
+    public func connect(using parameters: NWParameters) -> Connection?
     {
-        let conn = NWConnection(host: host, port: port, using: using)
+        let conn = NWConnection(host: host, port: port, using: parameters)
         
         return conn
     }

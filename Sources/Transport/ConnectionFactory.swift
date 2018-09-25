@@ -9,5 +9,5 @@ import Foundation
 import Network
 
 public protocol ConnectionFactory {
-    func connect(_ using: NWParameters) -> Connection?
+    func connect(using parameters: NWParameters) -> Connection?
 }
