@@ -11,7 +11,7 @@ import Network
 public protocol Listener
 {
     var debugDescription: String { get }
-    var newConnectionHandler: ((NWConnection) -> Void)? { get set }
+    var newConnectionHandler: ((Connection) -> Void)? { get set }
     var parameters: NWParameters { get }
     var port: NWEndpoint.Port? { get }
     var queue: DispatchQueue? { get }
