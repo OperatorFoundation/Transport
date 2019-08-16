@@ -10,6 +10,8 @@ import Network
 
 public class NetworkConnectionFactory: ConnectionFactory
 {
+    public var name: String
+    
     public var host: NWEndpoint.Host
     public var port: NWEndpoint.Port
     
@@ -17,6 +19,7 @@ public class NetworkConnectionFactory: ConnectionFactory
     {
         self.host=host
         self.port=port
+        self.name="Network"
     }
     
     public func connect(using parameters: NWParameters) -> Connection?
