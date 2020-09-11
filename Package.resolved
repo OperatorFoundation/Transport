@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/OperatorFoundation/NetworkLinux.git",
         "state": {
           "branch": null,
-          "revision": "34ac4da19eac518fe4fa0baade9c85f4d433aae4",
-          "version": "0.0.1"
+          "revision": "cbfc819a5cdf2ca4f0fb0aec4bd3bc8e980a409c",
+          "version": "0.0.3"
         }
       }
     ]
