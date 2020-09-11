@@ -42,7 +42,10 @@ class TransportTests: XCTestCase {
             XCTAssertNotNil(maybeConn)
             return
         }
-
+        
+        let queue = DispatchQueue(label: "networkTests")
+        conn.start(queue: queue)
+        
         let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
         lock.enter()
         conn.send(content: data, contentContext: .defaultMessage, isComplete: true, completion: NWConnection.SendCompletion.contentProcessed({
@@ -70,12 +73,15 @@ class TransportTests: XCTestCase {
             return
         }
         let factory: ConnectionFactory = NetworkConnectionFactory(host: host, port: port)
-        let params = NWParameters()
-        let maybeConn = factory.connect(using: params)
+        
+        let maybeConn = factory.connect(using: .tcp)
         guard let conn = maybeConn else {
             XCTAssertNotNil(maybeConn)
             return
         }
+        
+        let queue = DispatchQueue(label: "networkTests")
+        conn.start(queue: queue)
         
         let data: Data = "GET / HTTP/1.0\n\n".data(using: .ascii)!
         lock.enter()

@@ -2,12 +2,30 @@
   "object": {
     "pins": [
       {
+        "package": "Socket",
+        "repositoryURL": "https://github.com/OperatorFoundation/BlueSocket",
+        "state": {
+          "branch": null,
+          "revision": "90212ea8b66787c2d51d03527a04748ba6ee7679",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "Datable",
         "repositoryURL": "https://github.com/OperatorFoundation/Datable.git",
         "state": {
           "branch": null,
           "revision": "1c23f2b72d0d0cf4386fad05f8a5db4b91e8d304",
           "version": "3.0.2"
+        }
+      },
+      {
+        "package": "NetworkLinux",
+        "repositoryURL": "https://github.com/OperatorFoundation/NetworkLinux.git",
+        "state": {
+          "branch": null,
+          "revision": "34ac4da19eac518fe4fa0baade9c85f4d433aae4",
+          "version": "0.0.1"
         }
       }
     ]

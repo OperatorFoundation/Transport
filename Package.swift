@@ -14,12 +14,13 @@ let package = Package(
             targets: ["Transport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "3.0.2")
+        .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "3.0.2"),
+        .package(url: "https://github.com/OperatorFoundation/NetworkLinux.git", from: "0.0.1"),
     ],
     targets: [
         .target(
             name: "Transport",
-            dependencies: []),
+            dependencies: ["NetworkLinux"]),
         .testTarget(
             name: "TransportTests",
             dependencies: ["Transport", "Datable"]),
