@@ -6,17 +6,17 @@
 //
 
 import Foundation
+
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-    import Network
+
+import Network
+
 #elseif os(Linux)
-    import NetworkLinux
+
+import NetworkLinux
+
 #endif
 
 extension NWConnection: Connection
 {
-    public func receive(completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
-    {
-        //FIXME
-    }
-    
 }

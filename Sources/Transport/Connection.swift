@@ -19,10 +19,6 @@ public protocol Connection
               isComplete: Bool,
               completion: NWConnection.SendCompletion)
     
-    func receive(completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
-    
     func receive(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
-    
-    
 }
 
