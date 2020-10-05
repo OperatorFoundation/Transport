@@ -23,5 +23,6 @@ let package = Package(
         .testTarget(
             name: "TransportTests",
             dependencies: ["Transport", "Datable"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
