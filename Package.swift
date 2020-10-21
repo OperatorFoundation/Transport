@@ -15,7 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "3.0.2"),
-        .package(url: "https://github.com/OperatorFoundation/NetworkLinux.git", from: "0.0.7"),
+        .package(url: "https://github.com/OperatorFoundation/NetworkLinux.git", from: "0.2.3"),
     ],
     targets: [
         .target(
