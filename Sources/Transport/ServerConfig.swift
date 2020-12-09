@@ -33,7 +33,7 @@ import Foundation
     import NetworkLinux
 #endif
 
-public struct ServerConfig: Equatable
+public struct ServerConfig
 {
     public let host: NWEndpoint.Host?
     public let port: NWEndpoint.Port
