@@ -27,8 +27,11 @@
 
 import Foundation
 
-import Network
-import Datable
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+    import Network
+#elseif os(Linux)
+    import NetworkLinux
+#endif
 
 public struct ServerConfig: Equatable
 {
