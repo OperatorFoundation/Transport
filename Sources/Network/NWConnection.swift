@@ -106,6 +106,7 @@ open class NWConnection
     
     public func send(content: Data?, contentContext: NWConnection.ContentContext, isComplete: Bool, completion: NWConnection.SendCompletion)
     {
+        print("Transport send called: \(#file), \(#line)")
         if(usingUDP)
         {
             sendUDP(content: content, contentContext: contentContext, isComplete: isComplete, completion: completion)
@@ -118,6 +119,7 @@ open class NWConnection
 
     public func sendUDP(content: Data?, contentContext: NWConnection.ContentContext, isComplete: Bool, completion: NWConnection.SendCompletion)
     {
+        print("Transport sendUDP called: \(#file), \(#line)")
         guard let data = content else
         {
             switch completion
@@ -164,6 +166,7 @@ open class NWConnection
     
     public func sendTCP(content: Data?, contentContext: NWConnection.ContentContext, isComplete: Bool, completion: NWConnection.SendCompletion)
     {
+        print("Transport sendTCP called: \(#file), \(#line)")
         if let data = content
         {
             network?.write(data, timeout: 0)
@@ -192,6 +195,7 @@ open class NWConnection
     
     public func receive(completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
+        print("Transport receive called: \(#file), \(#line)")
         receive(minimumIncompleteLength: 1, maximumLength: 1024)
         {
             (data, context, isComplete, error) in
@@ -212,6 +216,7 @@ open class NWConnection
     
     public func receive(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
+        print("Transport receive called: \(#file), \(#line)")
         if(usingUDP)
         {
             receiveUDP(minimumIncompleteLength: minimumIncompleteLength, maximumLength: maximumLength, completion: completion)
@@ -224,6 +229,7 @@ open class NWConnection
 
     public func receiveUDP(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
+        print("Transport receiveUDP called: \(#file), \(#line)")
         queue?.async
         {
             let maybeResult = self.client?.recv(minimumIncompleteLength)
@@ -245,6 +251,7 @@ open class NWConnection
     
     public func receiveTCP(minimumIncompleteLength: Int, maximumLength: Int, completion: @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void)
     {
+        print("Transport receiveTCP called: \(#file), \(#line)")
         network?.readData(ofMinLength: minimumIncompleteLength, maxLength: maximumLength, timeout: 60)
         {
             (data, bool, error) in
