@@ -7,8 +7,7 @@ import PackageDescription
 let package = Package(
     name: "Transport",
     platforms: [
-        .macOS(.v10_14),
-        .iOS(.v14)
+        .macOS(.v10_15),
     ],
     products: [
         .library(
@@ -17,11 +16,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "3.0.6"),
+        .package(url: "https://github.com/OperatorFoundation/Net.git", from: "0.0.1"),
     ],
     targets: [
         .target(
             name: "Transport",
-            dependencies: []),
+            dependencies: ["Net"]),
         .testTarget(
             name: "TransportTests",
             dependencies: ["Transport", "Datable"]),
@@ -38,12 +38,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OperatorFoundation/Datable.git", from: "3.0.6"),
-        .package(url: "https://github.com/OperatorFoundation/NetworkLinux.git", from: "0.4.1"),
+        .package(url: "https://github.com/OperatorFoundation/Net.git", from: "0.0.1"),
     ],
     targets: [
         .target(
             name: "Transport",
-            dependencies: ["NetworkLinux"]),
+            dependencies: ["Net"]),
         .testTarget(
             name: "TransportTests",
             dependencies: ["Transport", "Datable"]),

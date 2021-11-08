@@ -26,12 +26,7 @@
 // SOFTWARE.
 
 import Foundation
-
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-    import Network
-#elseif os(Linux)
-    import NetworkLinux
-#endif
+import Net
 
 public struct ServerConfig
 {

@@ -9,6 +9,15 @@
           "revision": "31b055da961f794f1a2ce01b5521ee650815a9c9",
           "version": "3.0.6"
         }
+      },
+      {
+        "package": "Net",
+        "repositoryURL": "https://github.com/OperatorFoundation/Net.git",
+        "state": {
+          "branch": null,
+          "revision": "57de753edfa076c8b6c2ce5d08bbd48e3cdc1d52",
+          "version": "0.0.1"
+        }
       }
     ]
   },
