@@ -1,9 +1,8 @@
-.swiftpm
+
 Package.resolved
 .DS_Store
 /.build
 /Packages
 /*.xcodeproj
 *.xcuserstate
-Package.resolved
-*.xcuserstate
+.swiftpm/
