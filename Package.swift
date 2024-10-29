@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/OperatorFoundation/Datable", from: "4.0.1"),
-        .package(url: "https://github.com/OperatorFoundation/Net", from: "0.0.10"),
+        .package(url: "https://github.com/OperatorFoundation/Net", from: "0.0.11"),
     ],
     targets: [
         .target(
